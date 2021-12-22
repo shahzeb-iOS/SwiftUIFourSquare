@@ -77,14 +77,19 @@ struct SegmentedView:View {
         //Photos CollectionView
         case 0:
             ScrollView{
+                
                 LazyVGrid(columns:column){
-                    ForEach(photos, id:\.self){ image in
-                        let prefix = image.prefix
-                        let suffix = image.suffix
-                        let size = "200x200"
-                        let orignal = prefix + size + suffix
-                        Image(uiImage: orignal.LetsLoadImage())
-                            .frame(width: 200, height: 200)
+                    ForEach(Array(photos.enumerated()), id:\.offset){  index , image in
+                        NavigationLink(
+                            destination: PreviewImages(images: photos, count: photos.count, index: index),
+                            label: {
+                                let prefix = image.prefix
+                                let suffix = image.suffix
+                                let size = "200x200"
+                                let orignal = prefix + size + suffix
+                                Image(uiImage: orignal.LetsLoadImage())
+                                    .frame(width: 200, height: 200)
+                            })
                     }
                 }
             }
